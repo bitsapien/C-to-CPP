@@ -30,7 +30,7 @@ int main() {
 				if(strcmp(Temp,"stdio.h") == 0)
 					fprintf(fpwrite,"%s>\n","iostream.h");	
 				else
-					fprintf(fpwrite,"%s>",Temp);					
+					fprintf(fpwrite,"%s>\n",Temp);					
 			}
 		}
 
