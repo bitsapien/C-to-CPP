@@ -41,7 +41,8 @@ int main() {
 
 				strcpy(Temp2,Line);
 				Temp = strtok(Temp2,"printf");
-				fprintf(fpwrite,"%s",Temp);	
+				if (strstr(Temp,");") == NULL)
+					fprintf(fpwrite,"%s",Temp);	
 				
 				strcpy(Temp2,Line);
 				
