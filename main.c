@@ -5,17 +5,9 @@
 
 int converter();
 
-int strcount(char *myString, char char2find) {
-	int count = 0, len = strlen(myString), i;
-	for (i = 0; i <= len; i++)
-		if (myString[i] == char2find)
-			count++;
-	return count;
-}
-
 int main() {
   int success;
-	success = converter();
+  success = converter();
 
   if (success != 0) {
     printf("Conversion failed.\n" );

@@ -14,3 +14,4 @@
 
 int write_as_is(FILE *, const char *);
 char *strrev(char *);
+int strcount(char *, char);

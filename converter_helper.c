@@ -28,3 +28,11 @@ char *strrev(char *str){
 
   return str;
 }
+
+int strcount(char *myString, char char2find) {
+  int count = 0, len = strlen(myString), i;
+  for (i = 0; i <= len; i++)
+    if (myString[i] == char2find)
+      count++;
+  return count;
+}

@@ -15,7 +15,7 @@ converter_helper.o: converter_helper.c converter_helpers.h
 	$(CC) $(CFLAGS) converter_helper.c
 
 clean:
-	rm *o c2cpp toC.cpp
+	rm *o c2cpp output.cpp
 
 run:
 	./c2cpp
