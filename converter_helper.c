@@ -29,6 +29,18 @@ char *strrev(char *str){
   return str;
 }
 
+void shiftleft(char *Str,int amt) {
+    int i;
+    for( ; amt > 0 ; amt--)
+    {
+        i = 0;
+        while(Str[i] != '\0') {
+            Str[i] = Str[i + 1];
+            i++;
+        }
+    }
+}
+
 int strcount(char *myString, char char2find) {
   int count = 0, len = strlen(myString), i;
   for (i = 0; i <= len; i++)

@@ -4,7 +4,7 @@
 #include "converter_helpers.h"
 
 int converter();
-char ** argument_values(char *);
+char ** argument_values(char *,int);
 
 int main() {
     int success;
@@ -16,42 +16,56 @@ int main() {
     return 0;
 }
 
-/*char ** argument_values(char *)
+char ** argument_values(char *buffer_read, int value_count)
 {
-    char **arguments;
-    strvalues = malloc(value_count * sizeof(char *));
-    strcpy(tmp2, Line);
-    Tvalue = strtok(tmp2, ",");
-    Tvalue = strtok(NULL, ")");
+    char **arguments,tmp2[80],*temp_value,*temp_str;
+    int i;
+    arguments = malloc(value_count * sizeof(char *));
 
-    strtemp = strtok(Tvalue, ",");
-    strvalues[0] = (char *) malloc(strlen(strtemp) + 1);
-    strcpy(strvalues[0], strtemp);
+    if(value_count == 1) {
+        strcpy(tmp2, buffer_read);
+        temp_str = strtok(tmp2,",");
+        temp_str = strtok(NULL,")");
+        arguments[0] = (char *) malloc(strlen(temp_str) + 1);
+        strcpy(arguments[0], temp_str);
 
-    strcpy(tmp2, Line);
-    Tvalue = strtok(tmp2, ",");
-    Tvalue = strtok(NULL, ")");
+        return arguments;
+    }
 
-    strtemp = strrev(Tvalue);
-    strtemp = strtok(strtemp, ",");
-    strtemp = strrev(strtemp);
+    strcpy(tmp2, buffer_read);
+    temp_value = strtok(tmp2, ",");
+    temp_value = strtok(NULL, ")");
 
-    strvalues[value_count - 1] = (char *) malloc(strlen(strtemp) + 1);
-    strcpy(strvalues[value_count - 1], strtemp);
+    temp_str = strtok(temp_value, ",");
+    arguments[0] = (char *) malloc(strlen(temp_str) + 1);
+    strcpy(arguments[0], temp_str);
+
+    strcpy(tmp2, buffer_read);
+    temp_value = strtok(tmp2, ",");
+    temp_value = strtok(NULL, ")");
+
+    temp_str = strrev(temp_value);
+    temp_str = strtok(temp_str, ",");
+    temp_str = strrev(temp_str);
+
+    arguments[value_count - 1] = (char *) malloc(strlen(temp_str) + 1);
+    strcpy(arguments[value_count - 1], temp_str);
 
     if (value_count > 2) {
-        strcpy(tmp2, Line);
-        Tvalue = strtok(tmp2, ",");
-        Tvalue = strtok(NULL, ",");
+        strcpy(tmp2, buffer_read);
+        temp_value = strtok(tmp2, ",");
+        temp_value = strtok(NULL, ",");
 
         for (i = 1; i < value_count - 1; i++) {
-            strtemp = strtok(NULL, ",");
-            strvalues[i] = (char *) malloc(strlen(strtemp) + 1);
-            strcpy(strvalues[i], strtemp);
+            temp_str = strtok(NULL, ",");
+            arguments[i] = (char *) malloc(strlen(temp_str) + 1);
+            strcpy(arguments[i], temp_str);
         }
     }
+
+    return arguments;
 }
-*/
+
 int converter() {
     char *tmp, tmp2[80], Line[80], *Tvalue, **strvalues, **strstrvalues, *strtemp;
     int value_count, i, tmp_flag = 0;
@@ -121,38 +135,8 @@ int converter() {
                     }
                 }
                 else {                                                        //"%d ...blah...blah..." does not work when number of %d > 2
-                    strvalues = malloc(value_count * sizeof(char *));
-
                     strcpy(tmp2, Line);
-                    Tvalue = strtok(tmp2, ",");
-                    Tvalue = strtok(NULL, ")");
-
-                    strtemp = strtok(Tvalue, ",");
-                    strvalues[0] = (char *) malloc(strlen(strtemp) + 1);
-                    strcpy(strvalues[0], strtemp);
-
-                    strcpy(tmp2, Line);
-                    Tvalue = strtok(tmp2, ",");
-                    Tvalue = strtok(NULL, ")");
-
-                    strtemp = strrev(Tvalue);
-                    strtemp = strtok(strtemp, ",");
-                    strtemp = strrev(strtemp);
-
-                    strvalues[value_count - 1] = (char *) malloc(strlen(strtemp) + 1);
-                    strcpy(strvalues[value_count - 1], strtemp);
-
-                    if (value_count > 2) {
-                        strcpy(tmp2, Line);
-                        Tvalue = strtok(tmp2, ",");
-                        Tvalue = strtok(NULL, ",");
-
-                        for (i = 1; i < value_count - 1; i++) {
-                            strtemp = strtok(NULL, ",");
-                            strvalues[i] = (char *) malloc(strlen(strtemp) + 1);
-                            strcpy(strvalues[i], strtemp);
-                        }
-                    }
+                    strvalues = argument_values(tmp2,value_count);
 
                     strstrvalues = malloc((value_count + 1) * sizeof(char *));
 
@@ -225,10 +209,18 @@ int converter() {
                 tmp = strtok(NULL, "\"");
                 fprintf(fpwrite, "cout<<\"%s\"%s\n", tmp, ";");
             }
-        } else if (strstr("scanf", tmp)) {
+        }
+
+        else if (strstr(tmp,"scanf") != NULL) {
             strcpy(tmp2,Line);
             value_count = strcount(tmp2,'%');
-
+            strvalues = argument_values(tmp2,value_count);
+            fprintf(fpwrite, "%s", "cin");
+            for(i = 0 ; i < value_count ; i++) {
+                shiftleft(strvalues[i],1);
+                fprintf(fpwrite, ">>%s", strvalues[i]);
+            }
+            fprintf(fpwrite, "%s\n", ";");
         }
 
         else

@@ -13,5 +13,6 @@
 #endif /* converter_helpers_h */
 
 int write_as_is(FILE *, const char *);
-char *strrev(char *);
 int strcount(char *, char);
+char *strrev(char *);
+void shiftleft(char *,int);
