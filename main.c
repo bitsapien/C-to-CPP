@@ -18,7 +18,7 @@ int main() {
 
 int converter() {
     char *tmp, tmp2[80], Line[80], *Tvalue, **strvalues, **strstrvalues, *strtemp;
-    int value_count, i;
+    int value_count, i, tmp_flag = 0;
     FILE *fpopen, *fpwrite;
 
     fpopen = fopen("test.dat", "r");
@@ -47,7 +47,14 @@ int converter() {
 
                 strcpy(tmp2, Line);
                 tmp = strtok(tmp2, "printf");
-                fprintf(fpwrite, "%s", tmp);
+                for (i = 0; i <= strlen(tmp); i++) {
+                    if (tmp[i] != ' ' || tmp[i] != '\t') {
+                        tmp_flag = 1;
+                        break;
+                    }
+                }
+                if (tmp_flag == 0)
+                    fprintf(fpwrite, "%s", tmp);
 
                 strcpy(tmp2, Line);
 
@@ -166,16 +173,24 @@ int converter() {
                 }
             }
             else {
+
                 strcpy(tmp2, Line);
                 tmp = strtok(tmp2, "printf");
-                fprintf(fpwrite, "%s", tmp);
+//                fprintf(fpwrite, "%s", tmp);
+                for (i = 0; i <= strlen(tmp); i++) {
+                    if (tmp[i] != ' ' || tmp[i] != '\t') {
+                        tmp_flag = 1;
+                        break;
+                    }
+                }
+                if (tmp_flag == 0)
+                    fprintf(fpwrite, "%s", tmp);
 
                 tmp = strtok(Line, "\"");
                 tmp = strtok(NULL, "\"");
                 fprintf(fpwrite, "cout<<\"%s\"%s\n", tmp, ";");
             }
         } else if (strstr("scanf", tmp)) {
-
         }
 
         else
