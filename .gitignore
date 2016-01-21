@@ -34,3 +34,10 @@
 # Debug files
 *.dSYM/
 
+.idea/.name
+.idea/encodings.xml
+.idea/vcs.xml
+.idea/C-to-CPP.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
