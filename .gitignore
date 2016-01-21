@@ -34,3 +34,6 @@
 # Debug files
 *.dSYM/
 
+*.xml
+.idea/.name
+.idea/C-to-CPP.iml
