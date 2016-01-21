@@ -5,7 +5,8 @@ int a;
 int x = 10;
 printf("hey");
 printf(" %d", x);
-printf("%d", 45);
+printf("Hello %d world %d !",54,23);
+printf("%d AD%dZx%dfasa",1343,654,784);
 scanf("%d", &a);
 return 0;
 }

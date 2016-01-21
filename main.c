@@ -4,7 +4,7 @@
 #include "converter_helpers.h"
 
 int converter();
-
+char ** argument_values(char *);
 
 int main() {
     int success;
@@ -16,6 +16,42 @@ int main() {
     return 0;
 }
 
+/*char ** argument_values(char *)
+{
+    char **arguments;
+    strvalues = malloc(value_count * sizeof(char *));
+    strcpy(tmp2, Line);
+    Tvalue = strtok(tmp2, ",");
+    Tvalue = strtok(NULL, ")");
+
+    strtemp = strtok(Tvalue, ",");
+    strvalues[0] = (char *) malloc(strlen(strtemp) + 1);
+    strcpy(strvalues[0], strtemp);
+
+    strcpy(tmp2, Line);
+    Tvalue = strtok(tmp2, ",");
+    Tvalue = strtok(NULL, ")");
+
+    strtemp = strrev(Tvalue);
+    strtemp = strtok(strtemp, ",");
+    strtemp = strrev(strtemp);
+
+    strvalues[value_count - 1] = (char *) malloc(strlen(strtemp) + 1);
+    strcpy(strvalues[value_count - 1], strtemp);
+
+    if (value_count > 2) {
+        strcpy(tmp2, Line);
+        Tvalue = strtok(tmp2, ",");
+        Tvalue = strtok(NULL, ",");
+
+        for (i = 1; i < value_count - 1; i++) {
+            strtemp = strtok(NULL, ",");
+            strvalues[i] = (char *) malloc(strlen(strtemp) + 1);
+            strcpy(strvalues[i], strtemp);
+        }
+    }
+}
+*/
 int converter() {
     char *tmp, tmp2[80], Line[80], *Tvalue, **strvalues, **strstrvalues, *strtemp;
     int value_count, i, tmp_flag = 0;
@@ -176,7 +212,6 @@ int converter() {
 
                 strcpy(tmp2, Line);
                 tmp = strtok(tmp2, "printf");
-//                fprintf(fpwrite, "%s", tmp);
                 for (i = 0; i <= strlen(tmp); i++) {
                     if (tmp[i] != ' ' || tmp[i] != '\t') {
                         tmp_flag = 1;
@@ -191,6 +226,9 @@ int converter() {
                 fprintf(fpwrite, "cout<<\"%s\"%s\n", tmp, ";");
             }
         } else if (strstr("scanf", tmp)) {
+            strcpy(tmp2,Line);
+            value_count = strcount(tmp2,'%');
+
         }
 
         else
