@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "converter_helpers.h"
+
+int converter();
 
 int strcount(char *myString, char char2find) {
 	int count = 0, len = strlen(myString), i;
@@ -11,12 +14,22 @@ int strcount(char *myString, char char2find) {
 }
 
 int main() {
-	char *Temp, Temp2[80], Line[80], *Tvalue, **strvalues, **strstrvalues, *strtemp;
+  int success;
+	success = converter();
+
+  if (success != 0) {
+    printf("Conversion failed.\n" );
+  }
+  return 0;
+}
+
+int converter(){
+  char *Temp, Temp2[80], Line[80], *Tvalue, **strvalues, **strstrvalues, *strtemp;
 	int value_count, i, placedcount = 0;
 	FILE *fpopen,*fpwrite;
-	
-	fpopen = fopen("Test.C","r");
-	fpwrite = fopen("output.CPP","w");
+
+	fpopen = fopen("test.dat","r");
+	fpwrite = fopen("output.cpp","w+");
 
 	while (!feof(fpopen)) {
 		fgets(Line,80,fpopen);
@@ -28,9 +41,9 @@ int main() {
 
 			if (Temp != NULL) {
 				if(strcmp(Temp,"stdio.h") == 0)
-					fprintf(fpwrite,"%s>\n","iostream.h");	
+					fprintf(fpwrite,"%s>\n","iostream.h");
 				else
-					fprintf(fpwrite,"%s>\n",Temp);					
+					fprintf(fpwrite,"%s>\n",Temp);
 			}
 		}
 
@@ -41,10 +54,10 @@ int main() {
 
 				strcpy(Temp2,Line);
 				Temp = strtok(Temp2,"printf");
-				fprintf(fpwrite,"%s",Temp);	
-				
+				fprintf(fpwrite,"%s",Temp);
+
 				strcpy(Temp2,Line);
-				
+
 				Temp = strtok(Temp2,"\"");
 				Temp = strtok(NULL,"%");
 
@@ -162,14 +175,14 @@ int main() {
 			else {
 				strcpy(Temp2,Line);
 				Temp = strtok(Temp2,"printf");
-				fprintf(fpwrite,"%s",Temp);	
-				
+				fprintf(fpwrite,"%s",Temp);
+
 				Temp = strtok(Line,"\"");
 				Temp = strtok(NULL,"\"");
 				fprintf(fpwrite,"cout<<\"%s\"%s\n",Temp,";");
 			}
 		}
-		
+
 		else
 			fprintf(fpwrite,"%s",Temp);
 	}
