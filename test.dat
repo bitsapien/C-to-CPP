@@ -1,11 +1,15 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<stings.h>
 
-int main() {
-int a;
-int x = 10;
-printf("hey");
-printf(" %d", x);
-printf("%d", 45);
-scanf("%d", &a);
-return 0;
+int global_1;
+int global_2;
+int global_3;
+
+void main() {
+    int A, B, C;
+    printf("This is a ! test !\n");
+    scanf("%d %d %d", &global_1, &global_2,              &global_3);
+    printf("Values are: %d %d %d\n", global_1, global_2, global_3);
+    thisisarandomfunction();
 }
