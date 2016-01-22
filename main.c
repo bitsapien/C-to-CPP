@@ -67,15 +67,15 @@ char ** argument_values(char *buffer_read, int value_count)
 }
 
 int converter() {
-    char *tmp, tmp2[80], Line[80], *Tvalue, **strvalues, **strstrvalues, *strtemp;
+    char *tmp, tmp2[80], Line[100], *Tvalue, **strvalues, **strstrvalues, *strtemp;
     int value_count, i, tmp_flag = 0;
     FILE *fpopen, *fpwrite;
 
-    fpopen = fopen("test.dat", "r");
+    fpopen = fopen("test.dat", "r+");
     fpwrite = fopen("output.cpp", "w+");
 
     while (!feof(fpopen)) {
-        fgets(Line, 80, fpopen);
+        fgets(Line, 100, fpopen);
         tmp = strtok(Line, "<");
 
         if (strstr(tmp, "include") != NULL) {
