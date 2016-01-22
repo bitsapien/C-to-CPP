@@ -1,12 +1,15 @@
 #include<iostream.h>
+#include<stdlib.h>
+#include<stings.h>
 
-int main() {
-int a;
-int x = 10;
-cout<<"hey";
-cout<<x;
-cout<<"Hello "<<54<<" world "<<23<<" !";
-cout<<" "<<1343<<" AD"<<654<<"Zx"<<784<<"fasa";
-cin>>b;
-return 0;
+int global_1;
+int global_2;
+int global_3;
+
+void main() {
+    int A, B, C;
+    cout<<"This is a ! test !\n";
+    cin>>global_1>>global_2>>global_3;
+    cout<<"Values are: "<<global_1<<" "<<global_2<<" "<<global_3<<"\n";
+    thisisarandomfunction();
 }
